@@ -1,14 +1,15 @@
 import React from "react";
-
+import { CookiesProvider } from "react-cookie";
 import AuthGate from "./AuthGate";
 import Router from "./Router";
-import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <AuthGate>{setLoggedIn => <Router setLoggedIn={setLoggedIn} />}</AuthGate>
-    </div>
+    <CookiesProvider>
+      <AuthGate>
+        {removeCookie => <Router removeCookie={removeCookie} />}
+      </AuthGate>
+    </CookiesProvider>
   );
 }
 

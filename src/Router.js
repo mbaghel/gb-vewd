@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import ListVideos from "./ListVideos";
+import Video from "./Video";
 
-const Router = ({ setLoggedIn }) => {
+const Router = ({ removeCookie }) => {
   const [currentVideo, setVideo] = useState(null);
 
   if (!currentVideo) {
     return (
       <>
-        <Logout setLoggedIn={setLoggedIn} />
-        <ListVideos />
+        <Logout removeCookie={removeCookie} />
+        <ListVideos setVideo={setVideo} />
       </>
     );
   }
-  return <p>video is: {currentVideo}</p>;
+  return <Video currentVideo={currentVideo} setVideo={setVideo} />;
 };
 
 function Logout(props) {
   const logout = () => {
-    localStorage.removeItem("gbKey");
-    props.setLoggedIn(false);
+    props.removeCookie("gbKey");
   };
   return (
     <div>
