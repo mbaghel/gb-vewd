@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Keyboard from "./Keyboard";
+import { getKey } from "./lib/fetching";
 
 const Login = ({ setLoggedIn }) => {
   const [appCode, setAppCode] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const addLetter = e => {
     setAppCode(appCode + e.target.innerText);
@@ -17,8 +20,22 @@ const Login = ({ setLoggedIn }) => {
   };
 
   const login = () => {
-    localStorage.setItem("gbKey", process.env.REACT_APP_KEY);
-    setLoggedIn(true);
+    setLoading(true);
+    getKey(appCode)
+      .then(res => {
+        if (!res.data.regToken) {
+          setLoading(false);
+          setError(new Error("Failed to authenticate!"));
+        } else {
+          localStorage.setItem("gbKey", res.data.regToken);
+          setLoggedIn(true);
+        }
+      })
+      .catch(err => {
+        setLoading(false);
+        setError(err);
+      });
+    clear();
   };
 
   return (
@@ -26,6 +43,8 @@ const Login = ({ setLoggedIn }) => {
       <p>{appCode ? appCode : "——————"}</p>
       <Keyboard handleLetters={addLetter} backSpace={backSpace} clear={clear} />
       <button onClick={login}>Log in</button>
+      <p>{loading && "Loading..."}</p>
+      <p>{error && error.message}</p>
     </div>
   );
 };
