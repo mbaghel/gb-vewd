@@ -29,7 +29,7 @@ const useFetch = (fetchFunc, options) => {
     return () => {
       isSubscribed = false;
     };
-  }, [fetchFunc, options, cookies.gbKey]);
+  }, []);
 
   return { loading, error, data };
 };
