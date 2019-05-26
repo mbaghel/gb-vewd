@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Keyboard from "./Keyboard";
 import { getKey } from "./lib/fetching";
 
-const Login = ({ setCookie }) => {
+const Login = ({ setLogin }) => {
   const [appCode, setAppCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -27,12 +27,8 @@ const Login = ({ setCookie }) => {
           setLoading(false);
           setError(new Error("Failed to authenticate!"));
         } else {
-          setCookie("gbKey", res.data.regToken, {
-            path: "/",
-            maxAge: 60 * 60 * 24 * 365,
-            secure: true,
-            sameSite: "strict"
-          });
+          localStorage.setItem("gbKey", res.data.regToken);
+          setLogin(true);
         }
       })
       .catch(err => {

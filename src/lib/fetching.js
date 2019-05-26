@@ -3,9 +3,12 @@ import axios from "axios";
 const appName = "vewd-test";
 const videoTypeID = 2300;
 
+const gbKey = localStorage.getItem("gbKey");
+
 const api = axios.create({
   baseURL: "/api/",
   params: {
+    api_key: gbKey,
     format: "json"
   }
 });

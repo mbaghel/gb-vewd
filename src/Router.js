@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import ListVideos from "./ListVideos";
 import Video from "./Video";
 
-const Router = ({ removeCookie }) => {
+const Router = ({ logout }) => {
   const [currentVideo, setVideo] = useState(null);
 
   if (!currentVideo) {
     return (
       <>
-        <Logout removeCookie={removeCookie} />
+        <Logout logout={logout} />
         <ListVideos setVideo={setVideo} />
       </>
     );
@@ -17,12 +17,9 @@ const Router = ({ removeCookie }) => {
 };
 
 function Logout(props) {
-  const logout = () => {
-    props.removeCookie("gbKey");
-  };
   return (
     <div>
-      <button onClick={logout}>Logout</button>
+      <button onClick={props.logout}>Logout</button>
     </div>
   );
 }

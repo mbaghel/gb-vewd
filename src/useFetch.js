@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
 
-const useFetch = (fetchFunc, options) => {
+const useFetch = fetchFunc => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
-  const [cookies] = useCookies(["gbKey"]);
 
   useEffect(() => {
     let isSubscribed = true;
-    fetchFunc({ api_key: cookies.gbKey, ...options })
+    fetchFunc()
       .then(({ data }) => {
         if (isSubscribed) {
           if (!data.results) {
@@ -29,7 +27,7 @@ const useFetch = (fetchFunc, options) => {
     return () => {
       isSubscribed = false;
     };
-  }, []);
+  }, [fetchFunc]);
 
   return { loading, error, data };
 };

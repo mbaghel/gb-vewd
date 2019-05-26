@@ -1,13 +1,19 @@
-import React from "react";
-import { useCookies } from "react-cookie";
+import React, { useState } from "react";
 import Login from "./Login";
 
 const AuthGate = props => {
-  const [cookies, setCookie, removeCookie] = useCookies(["gbKey"]);
+  const [isLoggedIn, setLogin] = useState(
+    localStorage.getItem("gbKey") ? true : false
+  );
 
-  if (cookies.gbKey) return props.children(removeCookie);
+  const logout = () => {
+    localStorage.removeItem("gbKey");
+    setLogin(false);
+  };
 
-  return <Login setCookie={setCookie} />;
+  if (isLoggedIn) return props.children(logout);
+
+  return <Login setLogin={setLogin} />;
 };
 
 export default AuthGate;
