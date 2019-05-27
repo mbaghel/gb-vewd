@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
 import {
   IoMdPlay,
   IoMdPause,
@@ -13,7 +12,6 @@ const Player = ({ savedTime, urls, setVideo }) => {
   const timer = useRef(null);
   const [controlsActive, setActive] = useState(false);
   const [isPaused, setPaused] = useState(false);
-  const [cookies] = useCookies(["gbKey"]);
 
   useEffect(() => {
     const handleKeys = e => {
@@ -52,7 +50,7 @@ const Player = ({ savedTime, urls, setVideo }) => {
     <div>
       <video
         ref={videoEl}
-        src={`${urls.hd_url}?api_key=${cookies.gbKey}`}
+        src={`${urls.hd_url}?api_key=${localStorage.getItem("gbKey")}`}
         type="video/mp4"
         autoPlay
       />
