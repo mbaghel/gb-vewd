@@ -1,19 +1,37 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import Login from "./Login";
 
-const AuthGate = props => {
-  const [isLoggedIn, setLogin] = useState(
-    localStorage.getItem("gbKey") ? true : false
-  );
+const initialState = () => localStorage.getItem("gbKey");
 
-  const logout = () => {
-    localStorage.removeItem("gbKey");
-    setLogin(false);
-  };
-
-  if (isLoggedIn) return props.children(logout);
-
-  return <Login setLogin={setLogin} />;
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "register":
+      return action.payload;
+    case "unregister":
+      return null;
+    default:
+      throw new Error("invalid action");
+  }
 };
 
+const User = React.createContext(null);
+const UserDispatch = React.createContext(null);
+
+const AuthGate = props => {
+  const [registeredUser, userDispatch] = useReducer(reducer, initialState());
+
+  return (
+    <User.Provider value={registeredUser}>
+      <UserDispatch.Provider value={userDispatch}>
+        {registeredUser ? (
+          props.children
+        ) : (
+          <Login userDispatch={userDispatch} />
+        )}
+      </UserDispatch.Provider>
+    </User.Provider>
+  );
+};
+
+export { User, UserDispatch };
 export default AuthGate;

@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Keyboard from "./Keyboard";
 import { getKey } from "./lib/fetching";
 
-const Login = ({ setLogin }) => {
+const Login = props => {
   const [appCode, setAppCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const { userDispatch } = props;
 
   const addLetter = e => {
     setAppCode(appCode + e.target.innerText);
@@ -28,7 +30,7 @@ const Login = ({ setLogin }) => {
           setError(new Error("Failed to authenticate!"));
         } else {
           localStorage.setItem("gbKey", res.data.regToken);
-          setLogin(true);
+          userDispatch({ type: "register", payload: res.data.regToken });
         }
       })
       .catch(err => {

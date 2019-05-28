@@ -1,9 +1,16 @@
 import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import AuthGate from "./AuthGate";
-import Router from "./Router";
+import VideoSwitch from "./VideoSwitch";
 
 function App() {
-  return <AuthGate>{logout => <Router logout={logout} />}</AuthGate>;
+  return (
+    <Router>
+      <AuthGate>
+        <VideoSwitch />
+      </AuthGate>
+    </Router>
+  );
 }
 
 export default App;

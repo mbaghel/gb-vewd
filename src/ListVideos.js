@@ -1,21 +1,16 @@
 import React from "react";
-import { getVideos } from "./lib/fetching";
+import { Link } from "react-router-dom";
 import useFetch from "./useFetch";
 
-const ListVideos = ({ setVideo }) => {
-  const { loading, error, data } = useFetch(getVideos);
-
-  const playVideo = e => {
-    e.preventDefault();
-    setVideo(e.currentTarget.dataset.id);
-  };
+const ListVideos = () => {
+  const { loading, error, data } = useFetch("videos");
 
   const listVideos = data => {
     return data.results.map(vid => (
-      <a href="#" onClick={e => playVideo(e)} key={vid.id} data-id={vid.id}>
+      <Link to={`/video/${vid.id}`} key={vid.id}>
         <h5>{vid.name}</h5>
         <p>{vid.deck}</p>
-      </a>
+      </Link>
     ));
   };
 
@@ -23,6 +18,7 @@ const ListVideos = ({ setVideo }) => {
   if (error) return <p>{error.message}</p>;
 
   return <div>{listVideos(data)}</div>;
+  // *** TODO: handle next or prev clicks by fetching next group of vids
 };
 
 export default ListVideos;

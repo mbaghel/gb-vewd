@@ -1,19 +1,14 @@
 import axios from "axios";
+import { appName } from "./config";
 
-const appName = "vewd-test";
-const videoTypeID = 2300;
-
-const gbKey = localStorage.getItem("gbKey");
-
-const api = axios.create({
+const apiInstance = axios.create({
   baseURL: "/api/",
   params: {
-    api_key: gbKey,
     format: "json"
   }
 });
 
-function getVideos(options) {
+/* function getVideos(options) {
   return api.get("videos/", {
     params: {
       limit: 24,
@@ -30,7 +25,7 @@ function getUrls({ id, ...rest }) {
       ...rest
     }
   });
-}
+} */
 
 function getKey(regCode) {
   return axios.get(`/app/${appName}/get-result`, {
@@ -38,4 +33,4 @@ function getKey(regCode) {
   });
 }
 
-export { getKey, getVideos, getUrls };
+export { getKey, apiInstance };

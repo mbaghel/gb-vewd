@@ -1,13 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { User } from "./AuthGate";
+import { apiInstance } from "./lib/fetching";
 
-const useFetch = fetchFunc => {
+const videoTypeID = 2300;
+
+const api = {
+  videos: options =>
+    apiInstance.get("videos/", {
+      params: {
+        field_list: "id,name,deck",
+        limit: 24,
+        ...options
+      }
+    }),
+  video: ({ id, ...rest }) =>
+    apiInstance.get(`video/${videoTypeID}-${id}/`, {
+      params: {
+        field_list: "hd_url,high_url,low_url,saved_time",
+        ...rest
+      }
+    })
+};
+
+const useFetch = (type, options) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
 
+  const user = useContext(User);
+
   useEffect(() => {
     let isSubscribed = true;
-    fetchFunc()
+    api[type]({ api_key: user, ...options })
       .then(({ data }) => {
         if (isSubscribed) {
           if (!data.results) {
@@ -27,7 +51,7 @@ const useFetch = fetchFunc => {
     return () => {
       isSubscribed = false;
     };
-  }, [fetchFunc]);
+  }, [type, options, user]);
 
   return { loading, error, data };
 };

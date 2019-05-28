@@ -1,25 +1,23 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import {
   IoMdPlay,
   IoMdPause,
   IoMdFastforward,
   IoMdRewind
 } from "react-icons/io";
+import { User } from "./AuthGate";
 import "./Player.css";
 
-const Player = ({ savedTime, urls, setVideo }) => {
+const Player = ({ savedTime, urls }) => {
   const videoEl = useRef(null);
   const timer = useRef(null);
   const [controlsActive, setActive] = useState(false);
   const [isPaused, setPaused] = useState(false);
 
+  const user = useContext(User);
+
   useEffect(() => {
-    const handleKeys = e => {
-      if (e.keyCode === window.VK_BACK_SPACE) {
-        e.preventDefault();
-        setVideo(null);
-        return;
-      }
+    const handleKeys = () => {
       setActive(true);
       clearTimeout(timer.current);
       timer.current = setTimeout(() => {
@@ -31,7 +29,7 @@ const Player = ({ savedTime, urls, setVideo }) => {
       window.removeEventListener("keydown", handleKeys);
       clearTimeout(timer.current);
     };
-  }, [setVideo]);
+  }, []);
 
   const togglePlay = () => {
     if (isPaused) {
@@ -50,7 +48,7 @@ const Player = ({ savedTime, urls, setVideo }) => {
     <div>
       <video
         ref={videoEl}
-        src={`${urls.hd_url}?api_key=${localStorage.getItem("gbKey")}`}
+        src={`${urls.hd_url}?api_key=${user}`}
         type="video/mp4"
         autoPlay
       />
