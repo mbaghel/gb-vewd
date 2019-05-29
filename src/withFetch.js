@@ -1,28 +1,30 @@
-import { useState, useEffect, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { User } from "./AuthGate";
 import { apiInstance } from "./lib/fetching";
 
 const videoTypeID = 2300;
 
 const api = {
-  videos: options =>
+  videos: (user, options) =>
     apiInstance.get("videos/", {
       params: {
         field_list: "id,name,deck",
         limit: 24,
+        api_key: user,
         ...options
       }
     }),
-  video: ({ id, ...rest }) =>
+  video: (user, id, options) =>
     apiInstance.get(`video/${videoTypeID}-${id}/`, {
       params: {
         field_list: "hd_url,high_url,low_url,saved_time",
-        ...rest
+        api_key: user,
+        ...options
       }
     })
 };
 
-const useFetch = (type, options) => {
+const withFetch = getFunc => Component => props => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -31,29 +33,35 @@ const useFetch = (type, options) => {
 
   useEffect(() => {
     let isSubscribed = true;
-    api[type]({ api_key: user, ...options })
+    getFunc(api, user, props)
       .then(({ data }) => {
         if (isSubscribed) {
-          if (!data.results) {
-            setError(new Error(data.error));
-          } else {
-            setData(data);
-          }
+          setData(data);
           setLoading(false);
         }
       })
       .catch(err => {
         if (isSubscribed) {
-          setError(err);
-          setLoading(false);
+          if (err.response && err.response.data.error) {
+            setError(
+              new Error(
+                `Status Code: ${err.response.status}, Error: ${
+                  err.response.data.error
+                }`
+              )
+            );
+          } else {
+            setError(err);
+            setLoading(false);
+          }
         }
       });
     return () => {
       isSubscribed = false;
     };
-  }, [type, options, user]);
+  }, [props, user]);
 
-  return { loading, error, data };
+  return <Component data={data} loading={loading} error={error} {...props} />;
 };
 
-export default useFetch;
+export default withFetch;

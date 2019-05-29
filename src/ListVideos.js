@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useFetch from "./useFetch";
+import withFetch from "./withFetch";
 
-const ListVideos = () => {
-  const { loading, error, data } = useFetch("videos");
+const ListVideos = props => {
+  const { loading, error, data } = props;
 
   const listVideos = data => {
     return data.results.map(vid => (
@@ -21,4 +21,4 @@ const ListVideos = () => {
   // *** TODO: handle next or prev clicks by fetching next group of vids
 };
 
-export default ListVideos;
+export default withFetch((api, user) => api.videos(user))(ListVideos);

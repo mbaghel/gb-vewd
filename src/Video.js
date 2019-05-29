@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import useFetch from "./useFetch";
+import React from "react";
+import withFetch from "./withFetch";
 import Player from "./Player";
 
 const Video = props => {
-  const [options] = useState({ id: props.match.params.id });
-  const { loading, error, data } = useFetch("video", options);
+  const { loading, error, data } = props;
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>;
@@ -12,4 +11,6 @@ const Video = props => {
   return <Player savedTime={savedTime} urls={urls} />;
 };
 
-export default Video;
+export default withFetch((api, user, props) =>
+  api.video(user, props.match.params.id)
+)(Video);
