@@ -7,8 +7,7 @@ const Video = props => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>;
-  const { saved_time: savedTime, ...urls } = data.results;
-  return <Player savedTime={savedTime} urls={urls} />;
+  return <Player id={props.match.params.id} {...data.results} />;
 };
 
 export default withFetch((api, user, props) =>

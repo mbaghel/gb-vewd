@@ -14,4 +14,14 @@ function getKey(regCode) {
   });
 }
 
-export { getKey, apiInstance };
+function saveTime(user, id, time) {
+  return apiInstance.get("video/save-time/", {
+    params: {
+      api_key: user,
+      video_id: id,
+      time_to_save: time
+    }
+  });
+}
+
+export { getKey, apiInstance, saveTime };

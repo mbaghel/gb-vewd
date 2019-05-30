@@ -17,7 +17,7 @@ const api = {
   video: (user, id, options) =>
     apiInstance.get(`video/${videoTypeID}-${id}/`, {
       params: {
-        field_list: "hd_url,high_url,low_url,saved_time",
+        field_list: "hd_url,high_url,low_url,saved_time,name,length_seconds",
         api_key: user,
         ...options
       }
