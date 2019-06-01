@@ -61,15 +61,22 @@ const Player = props => {
 
   // set video to start at savedTime if it exists
   const setStartTime = () => {
-    const startTime = savedTime ? parseFloat(savedTime) : 0;
+    let startTime = 0;
+    if (savedTime && lengthSeconds - parseFloat(savedTime) > 60) {
+      startTime = parseInt(savedTime, 10);
+    }
     videoEl.current.currentTime = startTime;
   };
   // store savedTime to api when unmounting
   useEffect(
     () => () => {
-      saveTime(user, id, videoEl.current.currentTime);
+      let time = videoEl.current.currentTime;
+      if (videoEl.current.ended) {
+        time = lengthSeconds;
+      }
+      saveTime(user, id, time);
     },
-    [id, user]
+    [id, user, lengthSeconds]
   );
 
   const togglePlay = () => {
