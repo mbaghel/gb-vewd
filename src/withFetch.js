@@ -21,7 +21,23 @@ const api = {
         api_key: user,
         ...options
       }
-    })
+    }),
+  search: (user, query, options) => {
+    if (query === null)
+      return new Promise((res, rej) => {
+        res({ data: null });
+      });
+
+    return apiInstance.get("search/", {
+      params: {
+        api_key: user,
+        resources: "video",
+        field_list: "id,name,deck",
+        query,
+        ...options
+      }
+    });
+  }
 };
 
 const withFetch = getFunc => Component => props => {
@@ -32,6 +48,7 @@ const withFetch = getFunc => Component => props => {
   const user = useContext(User);
 
   useEffect(() => {
+    setLoading(true);
     let isSubscribed = true;
     getFunc(api, user, props)
       .then(({ data }) => {
