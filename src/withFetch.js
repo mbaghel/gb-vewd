@@ -37,7 +37,15 @@ const api = {
         ...options
       }
     });
-  }
+  },
+  shows: (user, options) =>
+    apiInstance.get("video_shows/", {
+      params: {
+        api_key: user,
+        field_list: "id,title,deck",
+        ...options
+      }
+    })
 };
 
 const withFetch = getFunc => Component => props => {
