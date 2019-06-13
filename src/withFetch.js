@@ -23,11 +23,11 @@ const api = {
       }
     }),
   search: (user, query, options) => {
-    if (query === null)
+    /*     if (query === null)
       return new Promise((res, rej) => {
         res({ data: null });
       });
-
+ */
     return apiInstance.get("search/", {
       params: {
         api_key: user,

@@ -9,18 +9,6 @@ const Login = props => {
 
   const { userDispatch } = props;
 
-  const addLetter = e => {
-    setAppCode(appCode + e.target.innerText);
-  };
-
-  const backSpace = () => {
-    setAppCode(appCode.slice(0, -1));
-  };
-
-  const clear = () => {
-    setAppCode("");
-  };
-
   const login = () => {
     setLoading(true);
     getKey(appCode)
@@ -37,13 +25,13 @@ const Login = props => {
         setLoading(false);
         setError(err);
       });
-    clear();
+    setAppCode("");
   };
 
   return (
     <div>
       <p>{appCode ? appCode : "——————"}</p>
-      <Keyboard handleLetters={addLetter} backSpace={backSpace} clear={clear} />
+      <Keyboard setText={setAppCode} />
       <button onClick={login}>Log in</button>
       <p>{loading && "Loading..."}</p>
       <p>{error && error.message}</p>

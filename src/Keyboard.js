@@ -1,13 +1,33 @@
 import React from "react";
+import { IoMdBackspace } from "react-icons/io";
 
-const Keyboard = props => {
+import "./Keyboard.css";
+
+const Keyboard = ({ setText }) => {
+  const addLetter = e => {
+    const text = e.target.innerText;
+    setText(prevState => prevState + text);
+  };
+
+  const space = () => {
+    setText(prevState => prevState + " ");
+  };
+
+  const backSpace = () => {
+    setText(prevState => prevState.slice(0, -1));
+  };
+
+  const clear = () => {
+    setText("");
+  };
+
   const listAlphabet = () => {
     const keys = [];
     const aCode = 65;
     for (let i = 0; i < 26; i++) {
       const char = String.fromCharCode(aCode + i);
       keys.push(
-        <button onClick={props.handleLetters} key={char}>
+        <button onClick={addLetter} key={char}>
           {char}
         </button>
       );
@@ -16,23 +36,26 @@ const Keyboard = props => {
   };
 
   return (
-    <>
-      <div>
+    <div className="keyboard">
+      <div className="letters">
         {listAlphabet()}
-        <button onClick={props.handleLetters}>1</button>
-        <button onClick={props.handleLetters}>2</button>
-        <button onClick={props.handleLetters}>3</button>
-        <button onClick={props.handleLetters}>4</button>
-        <button onClick={props.handleLetters}>5</button>
-        <button onClick={props.handleLetters}>6</button>
-        <button onClick={props.handleLetters}>7</button>
-        <button onClick={props.handleLetters}>8</button>
-        <button onClick={props.handleLetters}>9</button>
-        <button onClick={props.handleLetters}>0</button>
+        <button onClick={addLetter}>1</button>
+        <button onClick={addLetter}>2</button>
+        <button onClick={addLetter}>3</button>
+        <button onClick={addLetter}>4</button>
+        <button onClick={addLetter}>5</button>
+        <button onClick={addLetter}>6</button>
+        <button onClick={addLetter}>7</button>
+        <button onClick={addLetter}>8</button>
+        <button onClick={addLetter}>9</button>
+        <button onClick={addLetter}>0</button>
       </div>
-      <button onClick={props.backSpace}>{"<-"}</button>
-      <button onClick={props.clear}>Cl</button>
-    </>
+      <div className="special">
+        <button onClick={backSpace}>{<IoMdBackspace />}</button>
+        <button onClick={space}>SPACE</button>
+        <button onClick={clear}>CLEAR</button>
+      </div>
+    </div>
   );
 };
 

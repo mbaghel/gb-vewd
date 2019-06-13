@@ -1,0 +1,34 @@
+.keyboard button {
+  font-size: inherit;
+  color: inherit;
+  background-color: black;
+  border: none;
+}
+
+.keyboard button:focus {
+  outline: 1px solid red;
+}
+
+.letters {
+  display: flex;
+  flex-wrap: wrap;
+  width: 25vw;
+  height: 25vw;
+  justify-content: space-between;
+  align-content: space-between;
+}
+
+.letters button {
+  width: 16%;
+  height: 16%;
+}
+.special {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.special button {
+  height: 4vw;
+  margin: 2px 4px 2px 0;
+  min-width: 4vw;
+}
