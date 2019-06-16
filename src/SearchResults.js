@@ -1,17 +1,17 @@
 import React from "react";
 import withFetch from "./withFetch";
-import ListVideos from "./ListVideos";
+import ListWithPagination from "./ListWithPagination";
 
 const SearchList = withFetch((api, user, props) =>
-  api.search(user, props.query)
-)(ListVideos);
+  api.search(user, props.query, { page: props.offset / 10 + 1 })
+)(ListWithPagination);
 
-const SearchResults = ({ query }) => {
-  if (!query) return null;
+const SearchResults = props => {
+  if (!props.query) return null;
   return (
     <>
-      <p>Results for: "{query}"</p>
-      <SearchList query={query} />
+      <p>Results for: "{props.query}"</p>
+      <SearchList {...props} />
     </>
   );
 };

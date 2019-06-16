@@ -8,7 +8,7 @@ const api = {
   videos: (user, options) =>
     apiInstance.get("videos/", {
       params: {
-        field_list: "id,name,deck",
+        field_list: "id,name,deck,premium,length_seconds,publish_date,image",
         limit: 24,
         api_key: user,
         ...options
@@ -22,13 +22,8 @@ const api = {
         ...options
       }
     }),
-  search: (user, query, options) => {
-    /*     if (query === null)
-      return new Promise((res, rej) => {
-        res({ data: null });
-      });
- */
-    return apiInstance.get("search/", {
+  search: (user, query, options) =>
+    apiInstance.get("search/", {
       params: {
         api_key: user,
         resources: "video",
@@ -36,8 +31,7 @@ const api = {
         query,
         ...options
       }
-    });
-  },
+    }),
   shows: (user, options) =>
     apiInstance.get("video_shows/", {
       params: {

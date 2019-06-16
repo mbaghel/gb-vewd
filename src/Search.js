@@ -5,15 +5,24 @@ import SearchResults from "./SearchResults";
 const Search = () => {
   const [searchString, setSearchString] = useState("");
   const [currentQuery, setCurrentQuery] = useState(null);
+  const [offset, setOffset] = useState(0);
 
   const submitSearch = () => {
+    setOffset(0);
     setCurrentQuery(searchString);
     setSearchString("");
   };
 
-  const showResults = useMemo(() => <SearchResults query={currentQuery} />, [
-    currentQuery
-  ]);
+  const showResults = useMemo(
+    () => (
+      <SearchResults
+        query={currentQuery}
+        offset={offset}
+        setOffset={setOffset}
+      />
+    ),
+    [currentQuery, offset]
+  );
 
   return (
     <div>
