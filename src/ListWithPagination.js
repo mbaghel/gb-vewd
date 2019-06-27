@@ -1,6 +1,7 @@
 import React from "react";
 import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
 import ListVideos from "./ListVideos";
+import "./Pagination.css";
 
 const ListWithPagination = props => {
   const renderPageCount = () => {
@@ -35,13 +36,15 @@ const ListWithPagination = props => {
         error={props.error}
         data={props.data}
       />
-      <button onClick={prevPage}>
-        <IoMdArrowBack />
-      </button>
-      <p>Page: {props.data ? renderPageCount() : "--/--"}</p>
-      <button onClick={nextPage}>
-        <IoMdArrowForward />
-      </button>
+      <div className="pagination">
+        <button onClick={prevPage}>
+          <IoMdArrowBack />
+        </button>
+        <p>Page: {props.data ? renderPageCount() : "--/--"}</p>
+        <button onClick={nextPage}>
+          <IoMdArrowForward />
+        </button>
+      </div>
     </>
   );
 };

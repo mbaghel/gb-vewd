@@ -1,0 +1,23 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination button {
+  font-size: 1.8rem;
+  color: inherit;
+  background-color: var(--black);
+  border: none;
+  margin: 0 1rem;
+  padding: 1rem;
+}
+
+.pagination button svg {
+  vertical-align: top;
+}
+
+.pagination button:focus {
+  color: var(--black);
+  background-color: var(--text-color);
+}

@@ -13,7 +13,7 @@ function formatTime(time) {
 
   // don't display hours, or minutes if there are none
   if (hours > 0) {
-    return padNums(hours, mins, secs);
+    return `${hours}:` + padNums(mins, secs);
   }
   if (mins > 0) {
     return padNums(mins, secs);

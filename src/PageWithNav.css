@@ -1,0 +1,39 @@
+.navbar {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: var(--black);
+  align-items: center;
+  padding: var(--vertical-overscan) 0;
+  box-shadow: 5px 0px 10px black;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.brand {
+  width: 5.5rem;
+  height: 3.2rem;
+  margin-bottom: 5.5rem;
+}
+
+.navbar a svg {
+  height: 3.2rem;
+  width: 3.2rem;
+  vertical-align: top;
+}
+
+.navbar a {
+  display: block;
+  padding: 2.6rem var(--horizontal-overscan);
+}
+.navbar a.active {
+  background-color: var(--text-color);
+  color: var(--black);
+}
+
+.styled-page {
+  margin: var(--vertical-overscan) var(--horizontal-overscan)
+    var(--vertical-overscan) 15vw;
+}

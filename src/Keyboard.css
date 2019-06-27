@@ -1,12 +1,17 @@
 .keyboard button {
-  font-size: inherit;
+  font-size: 1.8rem;
   color: inherit;
-  background-color: black;
+  background-color: var(--black);
   border: none;
 }
 
+.keyboard button svg {
+  vertical-align: top;
+}
+
 .keyboard button:focus {
-  outline: 1px solid red;
+  color: var(--black);
+  background-color: var(--text-color);
 }
 
 .letters {
@@ -29,6 +34,7 @@
 
 .special button {
   height: 4vw;
-  margin: 2px 4px 2px 0;
+  margin: 2px 2px 2px 0;
   min-width: 4vw;
+  padding: 1px 16px;
 }

@@ -8,7 +8,7 @@ const api = {
   videos: (user, options) =>
     apiInstance.get("videos/", {
       params: {
-        field_list: "id,name,deck,premium,length_seconds,publish_date,image",
+        field_list: "id,name,premium,length_seconds,publish_date,image",
         limit: 24,
         api_key: user,
         ...options
@@ -27,7 +27,7 @@ const api = {
       params: {
         api_key: user,
         resources: "video",
-        field_list: "id,name,deck",
+        field_list: "id,name,premium,length_seconds,publish_date,image",
         query,
         ...options
       }
@@ -36,7 +36,7 @@ const api = {
     apiInstance.get("video_shows/", {
       params: {
         api_key: user,
-        field_list: "id,title,deck",
+        field_list: "id,title,deck,image,active,premium",
         ...options
       }
     })

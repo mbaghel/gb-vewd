@@ -3,6 +3,7 @@
   --secondary-text: #999999;
   --black: #0c0c0c;
   --bg-color: #242628;
+  --premium-color: #fdd304;
   --horizontal-overscan: 64px;
   --vertical-overscan: 38px;
   --nav-pad: 206px;
@@ -50,5 +51,6 @@ a {
   color: var(--text-color);
 }
 a:focus {
-  color: red;
+  color: var(--black);
+  background-color: var(--text-color);
 }
